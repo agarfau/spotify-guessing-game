@@ -11,9 +11,9 @@ var express = require('express'); // Express web server framework
 var favicon = require('serve-favicon');
 var app = express();
 
-app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use('/public',express.static(__dirname + '/public'));
 app.use('/',express.static(__dirname + '/'));
+app.use('/public',express.static(__dirname + '/public'));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 //console.log('Listening on 5000');
 //app.listen(5000);
 

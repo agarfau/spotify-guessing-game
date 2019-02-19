@@ -1,7 +1,7 @@
 {
-  "name": "spotify-guess-game",
+  "name": "spotify-guessing-game",
   "version": "1.0.0",
-  "description": "\"# SpotifyGuessGame\"",
+  "description": "\"# SpotifyGuessingGame\"",
   "main": "app.js",
   "dependencies": {
     "ejs": "^2.5.6",
@@ -15,12 +15,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alvgarcia/SpotifyGuessGame.git"
+    "url": "git+https://github.com/agarfau/spotify-guessing-game.git"
   },
-  "author": "alvgarcia",
+  "author": "agarfau",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/alvgarcia/SpotifyGuessGame/issues"
+    "url": "https://github.com/agarfau/spotify-guessing-game/issues"
   },
-  "homepage": "https://github.com/alvgarcia/SpotifyGuessGame#readme"
+  "homepage": "https://github.com/agarfau/spotify-guessing-game/#readme"
 }
