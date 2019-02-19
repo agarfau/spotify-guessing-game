@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+<head>  
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" src="handlebars.min.js"></script>
+    <script type="text/javascript" src="jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="jdu.js"></script>
+    <link href="https://sp-bootstrap.global.ssl.fastly.net/8.0.0/sp-bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Spotify Guess Game</title>
+
+<script type='text/javascript'>//<![CDATA[
+window.onload=function(){
+// find template and compile it
+var templateSource = document.getElementById('results-template').innerHTML,
+    template = Handlebars.compile(templateSource),
+    resultsPlaceholder = document.getElementById('results'),
+    playingCssClass = 'playing',
+    audioObject = null,
+    currentSongName = null,
+    previousSongName = null,
+    tokenhash = window.location.hash.substr(1),
+    token = tokenhash.substr(tokenhash.indexOf('access_token=')).split('&')[0].split('=')[1];
+    correctAnswer = false;
+    
+var fetchTracks = function (albumId, callback) {
+    $.ajax({
+        url: 'https://api.spotify.com/v1/albums/' + albumId,
+        headers: {
+            'Authorization': 'Bearer ' + token
+        },
+        success: function (response) {
+            callback(response);
+        }
+    });
+};
+
+var searchAlbums = function (query) {
+    $("#artistinfo").html("");
+    $("#resultado").html("");
+    correctAnswer = false;
+    if (audioObject != null){
+        audioObject.pause();
+    }
+    $.ajax({
+        url: 'https://api.spotify.com/v1/search',
+        data: {
+            q: query,
+            type: 'album'
+        },
+        headers: {
+            'Authorization': 'Bearer ' + token
+        },
+        success: function (response) {
+            resultsPlaceholder.innerHTML = template(response);
+        }
+    });
+};
+    
+var checkResult = function (titulo) {
+    $("#answer").html(titulo);
+    currentSongName = Diacritics.replace(currentSongName);
+    titulo = Diacritics.replace(titulo);
+    if ((currentSongName.toUpperCase()).includes(titulo.toUpperCase()) && titulo.length>currentSongName.length*0.3){
+        correctAnswer = true;
+        $("#resultado").html("Correct");
+    }else{
+        correctAnswer = false;
+        $("#resultado").html("Incorrect");
+    }
+};
+
+results.addEventListener('click', function (e) {
+    var target = e.target;
+    if (target !== null && target.classList.contains('cover')) {
+        if (target.classList.contains(playingCssClass)) {
+            audioObject.pause();
+        } else {
+            if (audioObject) {
+                audioObject.pause();
+            }
+            fetchTracks(target.getAttribute('data-album-id'), function (data) {
+                var numSongs = data.tracks.items.length;
+                var idx = Math.floor(Math.random()*numSongs);
+                currentSong = data.tracks.items[idx];
+                var album = data.name;
+                var artist = data.artists[0].name;
+                $("#artistinfo").html("The album you've chosen is '"+album+"' by "+artist);
+                var pr_url = currentSong.preview_url;
+                if (pr_url == null){
+                    $("#resultado").html("Sorry! There's no preview for this album");
+                }else{
+                    audioObject = new Audio(currentSong.preview_url);
+                    currentSongName = currentSong.name;
+                    previousSongName = currentSong.name;
+                    $("#currSong").html(currentSongName);
+                    $("#resultado").html("");
+                    audioObject.play();
+                    target.classList.add(playingCssClass);
+                    audioObject.addEventListener('ended', function () {
+                        if (correctAnswer){
+                            $("#resultado").html("You did it! The complete name was '"+previousSongName+"'");
+                        }else{
+                            $("#resultado").html("Time's up! The song was '"+previousSongName+"'");
+                        }
+                        currentSongName = null;
+                        target.classList.remove(playingCssClass);
+                        $("#artistinfo").html("");
+                    });
+                    correctAnswer = false;
+                    audioObject.addEventListener('pause', function () {
+                        currentSongName = null;
+                        target.classList.remove(playingCssClass);
+                        $("#artistinfo").html("");
+                        $("#resultado").html("");
+                    });
+                }
+            });
+        }
+    }
+});
+
+document.getElementById('search-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    searchAlbums(document.getElementById('query').value);
+}, false);
+    
+document.getElementById('results-submit-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    checkResult(document.getElementById('submitted-results').value);
+}, false);
+    
+}//]]> 
+
+
+
+</script>
+
+  
+</head>
+
+<body>
+  <div class="container">
+    <h1>Spotify Guess Game</h1>
+    <p>Type an artist or album name and click on "Search". Then, click on any album from the results and a song will play for 30 seconds.</p>
+    <form id="search-form">
+        <input type="text" id="query" value="" class="form-control" placeholder="Type an Artist Name"/>
+        <input type="submit" id="search" class="btn btn-primary" value="Search" />
+    </form>
+    <p>What is the name of the song you're listening to?</p>
+    <form id="results-submit-form">
+        <input type="text" id="submitted-results" value="" class="form-control" placeholder="Make your guess"/>
+        <input type="submit" class="btn btn-primary" value="Submit" />
+    </form>
+    <h3 id="artistinfo"></h3>
+    <h1 id="resultado"></h1>
+    <div id="results"></div>
+    <p id="currSong"></p>  
+    <p id="answer"></p>
+    </div>
+    
+    <script id="results-template" type="text/x-handlebars-template">
+        {{#each albums.items}}
+        <div style="background-image:url({{images.0.url}})" data-album-id="{{id}}" class="cover"></div>
+        {{/each}}
+    </script>
+     
+    <footer><br>This application has been developed by a group of students of the subject 'Integración de Redes, Aplicaciones y Contenidos' using the Spotify Web API<br>Álvaro García Faura - Teresa Gómez Fernández - Javier Pérez Ruedas<br>Group 29</footer>
+
+
+</body>
+
+</html>
