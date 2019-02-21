@@ -22,5 +22,9 @@
   "bugs": {
     "url": "https://github.com/agarfau/spotify-guessing-game/issues"
   },
-  "homepage": "https://github.com/agarfau/spotify-guessing-game/#readme"
+  "homepage": "https://github.com/agarfau/spotify-guessing-game/#readme",
+  "engines": {
+    "node": "10.x"
+  },
+
 }

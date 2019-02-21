@@ -130,7 +130,7 @@
           }
           document.getElementById('login-button').addEventListener('click', function() {
             var client_id = '87a7207869674f249d7705ce8177a88a';
-            var redirect_uri = 'https://spotify-guess.herokuapp.com/public';
+            var redirect_uri = 'https://spotify-guessing.herokuapp.com/public';
             var state = generateRandomString(16);
             localStorage.setItem(stateKey, state);
             var url = 'https://accounts.spotify.com/authorize';
