@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/agarfau/spotify-guessing-game/#readme",
   "engines": {
-    "node": "10.x"
+    "node": "10.x",
+    "npm": "^6.4.1"
   }
 }
