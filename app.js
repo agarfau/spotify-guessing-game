@@ -17,7 +17,8 @@ app.use('/',express.static(__dirname + '/'));
 //console.log('Listening on 8443');
 //app.listen(8443);
 var favicon = require('serve-favicon');
-app.use('/public',express.static(__dirname + '/public'));
 app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use('/public',express.static(__dirname + '/public'));
+
 
 module.exports = app;
