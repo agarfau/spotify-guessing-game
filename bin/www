@@ -5,13 +5,13 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('SpotifyGuessGame:server');
+var debug = require('debug')('SpotifyGuessingGame:server');
 var fs = require('fs');
 var http = require('http');
 var https = require('https');
 
-var privateKey = fs.readFileSync('certs/spotify-guess-game-key.pem', 'utf-8');
-var certificate = fs.readFileSync('certs/spotify-guess-game-cert.pem', 'utf-8');
+var privateKey = fs.readFileSync('certs/spotify-guessing-game-key.pem', 'utf-8');
+var certificate = fs.readFileSync('certs/spotify-guessing-game-cert.pem', 'utf-8');
 
 var credentials = {
     key: privateKey,

@@ -66,7 +66,7 @@ var checkResult = function (titulo) {
         $("#resultado").html("Correct");
     }else{
         correctAnswer = false;
-        $("#resultado").html("Incorrect");
+        $("#resultado").html("Incorrect... Try again!");
     }
 };
 
@@ -141,7 +141,7 @@ document.getElementById('results-submit-form').addEventListener('submit', functi
 
 <body>
   <div class="container">
-    <h1>Spotify Guess Game</h1>
+    <h1>Spotify Guessing Game</h1>
     <p>Type an artist or album name and click on "Search". Then, click on any album from the results and a song will play for 30 seconds.</p>
     <form id="search-form">
         <input type="text" id="query" value="" class="form-control" placeholder="Type an Artist Name"/>

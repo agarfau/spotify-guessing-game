@@ -14,7 +14,7 @@ var app = express();
 app.use('/',express.static(__dirname + '/'));
 app.use('/public',express.static(__dirname + '/public'));
 app.use(favicon(__dirname + '/public/favicon.ico'));
-//console.log('Listening on 5000');
-//app.listen(5000);
+//console.log('Listening on 8443');
+//app.listen(8443);
 
 module.exports = app;
