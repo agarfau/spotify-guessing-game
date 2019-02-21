@@ -10,16 +10,10 @@
 var express = require('express'); // Express web server framework
 
 var app = express();
-
-
-
-
-//console.log('Listening on 8443');
-//app.listen(8443);
 var favicon = require('serve-favicon');
+
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use('/',express.static(__dirname + '/'));
 app.use('/public',express.static(__dirname + '/public'));
-
 
 module.exports = app;
