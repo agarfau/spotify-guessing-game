@@ -8,7 +8,7 @@
  */
 
 var express = require('express'); // Express web server framework
-//var favicon = require('serve-favicon');
+var favicon = require('serve-favicon');
 var app = express();
 
 app.use('/',express.static(__dirname + '/'));
